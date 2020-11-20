@@ -1,20 +1,29 @@
 import React, { useEffect } from "react";
 import { checkWin } from "../helpers/helpers";
-const Popup = ({ correctLetters, worngLetters, selectedWord, setPlayable }) => {
+
+const Popup = ({
+  correctLetters,
+  wrongLetters,
+  selectedWord,
+  setPlayable,
+  playAgain,
+}) => {
   let finalMessage = "";
   let finalMessageRevealWord = "";
   let playable = true;
 
-  if (checkWin(correctLetters, worngLetters, selectedWord) === "win") {
-    finalMessage = "YOU WON!";
+  if (checkWin(correctLetters, wrongLetters, selectedWord) === "win") {
+    finalMessage = "You won! 😃";
     playable = false;
-  } else if (checkWin(correctLetters, worngLetters, selectedWord) === "lose") {
-    finalMessage = "SORRY YOU LOST!";
-    finalMessageRevealWord = `... the word was: ${selectedWord}`;
+  } else if (checkWin(correctLetters, wrongLetters, selectedWord) === "lose") {
+    finalMessage = "You lost. 😕";
+    finalMessageRevealWord = `...the word was: ${selectedWord}`;
     playable = false;
   }
 
-  useEffect(() => setPlayable(playable));
+  useEffect(() => {
+    setPlayable(playable);
+  });
 
   return (
     <div
@@ -22,9 +31,9 @@ const Popup = ({ correctLetters, worngLetters, selectedWord, setPlayable }) => {
       style={finalMessage !== "" ? { display: "flex" } : {}}
     >
       <div className="popup">
-        <h2>{finalMessage} </h2>
-        <h3>{finalMessageRevealWord} </h3>
-        <button>Play Again</button>
+        <h2>{finalMessage}</h2>
+        <h3>{finalMessageRevealWord}</h3>
+        <button onClick={playAgain}>Play Again</button>
       </div>
     </div>
   );
